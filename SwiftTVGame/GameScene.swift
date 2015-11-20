@@ -31,6 +31,7 @@ class GameScene: SKScene {
     
     func fireBullet(gesture: UITapGestureRecognizer) {
         let heroBullet = SKSpriteNode(imageNamed: "heroBullet")
+        heroBullet.zPosition = 200
         heroBullet.position = CGPointMake(hero.position.x + hero.texture!.size().width / 2, hero.position.y)
         self.addChild(heroBullet)
         heroBullet.runAction(SKAction.moveTo(CGPointMake(self.frame.size.width * 1.2, hero.position.y), duration: 1.0)) { () -> Void in
