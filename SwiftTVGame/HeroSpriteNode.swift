@@ -22,16 +22,6 @@ class HeroSpriteNode: SKSpriteNode {
         self.userInteractionEnabled = true
     }
     
-//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-//        print("touched!!!")
-//        for touch in touches {
-//            let location = touch.locationInNode(self.parent!)
-//            print("Location is: ", location)
-//            self.position.x = location.x - (location.x - self.position.x)
-//            self.position.y = location.y - (location.y - self.position.y)
-//        }
-//    }
-    
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         for touch in touches {
             let currentLocation = touch.locationInNode(self.parent!)
