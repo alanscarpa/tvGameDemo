@@ -89,15 +89,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if (contact.bodyA.categoryBitMask == enemyBulletCategory && contact.bodyB.categoryBitMask == heroBulletCategory
             || contact.bodyA.categoryBitMask == heroBulletCategory && contact.bodyB.categoryBitMask == enemyBulletCategory) {
+            showExplosion(firstNode.position)
             firstNode.removeFromParent()
             secondNode.removeFromParent()
-            showExplosion()
             startShootingAtHero()
         }
     }
     
-    func showExplosion() {
-        
+    func showExplosion(position: CGPoint) {
+        let explosion = SKSpriteNode(imageNamed: "explosion")
+        explosion.zPosition = 400
+        explosion.position = position
+        explosion.xScale = 0.6
+        explosion.yScale = 0.6
+        self.addChild(explosion)
+        explosion.runAction(SKAction.rotateByAngle(90.0, duration: 0.3)) { () -> Void in
+            explosion.removeFromParent()
+        }
     }
     
 }
