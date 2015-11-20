@@ -19,6 +19,8 @@ class HeroSpriteNode: SKSpriteNode {
         super.init(texture: texture, color: color, size: size)
         self.texture = SKTexture(imageNamed: "hero")
         self.size = CGSizeMake(self.texture!.size().width, self.texture!.size().height);
+        self.xScale = 0.5
+        self.yScale = 0.5
         self.userInteractionEnabled = true
         self.zPosition = 100
     }

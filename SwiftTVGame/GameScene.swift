@@ -36,13 +36,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func fireBullet(gesture: UITapGestureRecognizer) {
         let heroBullet = SKSpriteNode(imageNamed: "heroBullet")
-        heroBullet.physicsBody = SKPhysicsBody(rectangleOfSize:heroBullet.texture!.size())
+        heroBullet.xScale = 0.5
+        heroBullet.yScale = 0.5
+        heroBullet.physicsBody = SKPhysicsBody(rectangleOfSize:heroBullet.size)
         heroBullet.physicsBody!.usesPreciseCollisionDetection = true
         heroBullet.physicsBody!.categoryBitMask = heroBulletCategory
         heroBullet.physicsBody!.contactTestBitMask = enemyBulletCategory
         heroBullet.physicsBody!.collisionBitMask = enemyBulletCategory
         heroBullet.zPosition = 200
-        heroBullet.position = CGPointMake(hero.position.x + hero.texture!.size().width / 2, hero.position.y)
+        heroBullet.position = CGPointMake(hero.position.x, hero.position.y)
         self.addChild(heroBullet)
         heroBullet.runAction(SKAction.moveTo(CGPointMake(self.frame.size.width * 1.2, hero.position.y), duration: 1.0)) { () -> Void in
             heroBullet.removeFromParent()
@@ -52,7 +54,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func startShootingAtHero() {
         let enemyBullet = SKSpriteNode(imageNamed: "enemyBullet")
         enemyBullet.zPosition = 200
-        enemyBullet.physicsBody = SKPhysicsBody(rectangleOfSize:enemyBullet.texture!.size())
+        enemyBullet.xScale = 0.5
+        enemyBullet.yScale = 0.5
+        enemyBullet.physicsBody = SKPhysicsBody(rectangleOfSize:enemyBullet.size)
         enemyBullet.physicsBody!.usesPreciseCollisionDetection = true
         enemyBullet.physicsBody!.categoryBitMask = enemyBulletCategory
         enemyBullet.physicsBody!.contactTestBitMask = heroBulletCategory
@@ -83,10 +87,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let firstNode = contact.bodyA.node as! SKSpriteNode
         let secondNode = contact.bodyB.node as! SKSpriteNode
         
-//        if (contact.bodyA.categoryBitMask == heroBulletCategory && contact.bodyB.categoryBitMask == enemyBulletCategory) {
-//            print("Hit!!!")
-//        }
-        print("Hit!!")
+        if (contact.bodyA.categoryBitMask == enemyBulletCategory && contact.bodyB.categoryBitMask == heroBulletCategory
+            || contact.bodyA.categoryBitMask == heroBulletCategory && contact.bodyB.categoryBitMask == enemyBulletCategory) {
+            firstNode.removeFromParent()
+            secondNode.removeFromParent()
+            showExplosion()
+            startShootingAtHero()
+        }
+    }
+    
+    func showExplosion() {
+        
     }
     
 }
