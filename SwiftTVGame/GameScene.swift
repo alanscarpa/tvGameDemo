@@ -14,6 +14,7 @@ class GameScene: SKScene {
 
     override func didMoveToView(view: SKView) {
         loadHeroOntoScreen()
+        setUpTapGesture()
         startShootingAtHero()
     }
     
@@ -22,11 +23,27 @@ class GameScene: SKScene {
         hero.position = CGPointMake(hero.texture!.size().width / 2, self.frame.size.height / 2)
     }
     
+    func setUpTapGesture() {
+        let tap = UITapGestureRecognizer(target: self, action: "fireBullet:")
+        tap.allowedPressTypes = [NSNumber(integer: UIPressType.Select.rawValue)]
+        self.view!.addGestureRecognizer(tap)
+    }
+    
+    func fireBullet(gesture: UITapGestureRecognizer) {
+        let heroBullet = SKSpriteNode(imageNamed: "heroBullet")
+        heroBullet.position = CGPointMake(hero.position.x + hero.texture!.size().width / 2, hero.position.y)
+        self.addChild(heroBullet)
+        heroBullet.runAction(SKAction.moveTo(CGPointMake(self.frame.size.width * 1.2, hero.position.y), duration: 1.0)) { () -> Void in
+            heroBullet.removeFromParent()
+        }
+    }
+    
     func startShootingAtHero() {
-        var bullet = SKSpriteNode(imageNamed: "bullet")
+        let bullet = SKSpriteNode(imageNamed: "bullet")
         bullet.position = CGPointMake(self.frame.size.width + 20, self.frame.size.height / 2)
         self.addChild(bullet)
-        bullet.runAction(SKAction.moveTo(CGPointMake(-((bullet.texture?.size().width)! + 20), self.frame.size.height / 2), duration: 2.0)) { () -> Void in
+        bullet.runAction(SKAction.moveTo(CGPointMake(-(bullet.texture!.size().width + 20), self.frame.size.height / 2), duration: 2.0)) { () -> Void in
+            bullet.removeFromParent()
             self.startShootingAtHero()
         };
         
