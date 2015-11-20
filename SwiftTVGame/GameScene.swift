@@ -11,14 +11,25 @@ import SpriteKit
 class GameScene: SKScene {
     
     var hero = HeroSpriteNode()
-    
+
     override func didMoveToView(view: SKView) {
         loadHeroOntoScreen()
+        startShootingAtHero()
     }
     
     func loadHeroOntoScreen() {
         self.addChild(hero)
         hero.position = CGPointMake(hero.texture!.size().width / 2, self.frame.size.height / 2)
+    }
+    
+    func startShootingAtHero() {
+        var bullet = SKSpriteNode(imageNamed: "bullet")
+        bullet.position = CGPointMake(self.frame.size.width + 20, self.frame.size.height / 2)
+        self.addChild(bullet)
+        bullet.runAction(SKAction.moveTo(CGPointMake(-((bullet.texture?.size().width)! + 20), self.frame.size.height / 2), duration: 2.0)) { () -> Void in
+            self.startShootingAtHero()
+        };
+        
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
