@@ -14,6 +14,7 @@ class GameScene: SKScene {
 
     override func didMoveToView(view: SKView) {
         loadHeroOntoScreen()
+        self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
         setUpTapGesture()
         startShootingAtHero()
     }
@@ -21,6 +22,7 @@ class GameScene: SKScene {
     func loadHeroOntoScreen() {
         self.addChild(hero)
         hero.position = CGPointMake(hero.texture!.size().width / 2, self.frame.size.height / 2)
+        hero.zPosition = 100
     }
     
     func setUpTapGesture() {
@@ -31,6 +33,7 @@ class GameScene: SKScene {
     
     func fireBullet(gesture: UITapGestureRecognizer) {
         let heroBullet = SKSpriteNode(imageNamed: "heroBullet")
+        heroBullet.physicsBody = SKPhysicsBody(rectangleOfSize:heroBullet.texture!.size())
         heroBullet.zPosition = 200
         heroBullet.position = CGPointMake(hero.position.x + hero.texture!.size().width / 2, hero.position.y)
         self.addChild(heroBullet)
@@ -41,7 +44,9 @@ class GameScene: SKScene {
     
     func startShootingAtHero() {
         let bullet = SKSpriteNode(imageNamed: "bullet")
-        bullet.position = CGPointMake(self.frame.size.width + 20, self.frame.size.height / 2)
+        bullet.zPosition = 200
+        bullet.physicsBody = SKPhysicsBody(rectangleOfSize:bullet.texture!.size())
+        bullet.position = CGPointMake(self.frame.size.width + 100, self.frame.size.height / 2)
         self.addChild(bullet)
         bullet.runAction(SKAction.moveTo(CGPointMake(-(bullet.texture!.size().width + 20), self.frame.size.height / 2), duration: 2.0)) { () -> Void in
             bullet.removeFromParent()
