@@ -9,36 +9,42 @@
 import SpriteKit
 
 class GameScene: SKScene {
+    
+    var hero = HeroSpriteNode()
+    
     override func didMoveToView(view: SKView) {
-        /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!";
-        myLabel.fontSize = 65;
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
-        
-        self.addChild(myLabel)
+        loadHeroOntoScreen()
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        /* Called when a touch begins */
-        
+    func loadHeroOntoScreen() {
+        self.addChild(hero)
+        hero.position = CGPointMake(hero.texture!.size().width / 2, self.frame.size.height / 2)
+    }
+    
+//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+//        for touch in touches {
+//            let location = touch.locationInNode(self)
+//            print("Location is: ", location)
+//            print("X: ", location.x - (location.x - hero.position.x))
+//            print("Y: ",hero.position.y = location.y - (location.y - hero.position.y))
+//            hero.position.x = location.x - (location.x - hero.position.x)
+//            hero.position.y = location.y - (location.y - hero.position.y)
+//        }
+//    }
+    
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         for touch in touches {
-            let location = touch.locationInNode(self)
+            let currentLocation = touch.locationInNode(self)
+            let previousLocation = touch.previousLocationInNode(self)
             
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
+            let distanceMovedX = currentLocation.x - previousLocation.x
+            let distanceMovedY = currentLocation.y - previousLocation.y
             
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
-            
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-            
-            sprite.runAction(SKAction.repeatActionForever(action))
-            
-            self.addChild(sprite)
+            hero.position.x = hero.position.x + distanceMovedX
+            hero.position.y = hero.position.y + distanceMovedY
         }
     }
-   
+    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
     }

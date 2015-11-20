@@ -16,6 +16,7 @@
 		459224511BFE764B00A372A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 459224501BFE764B00A372A6 /* Assets.xcassets */; };
 		4592245C1BFE764B00A372A6 /* SwiftTVGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4592245B1BFE764B00A372A6 /* SwiftTVGameTests.swift */; };
 		459224671BFE764B00A372A6 /* SwiftTVGameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459224661BFE764B00A372A6 /* SwiftTVGameUITests.swift */; };
+		459224771BFF895C00A372A6 /* HeroSpriteNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459224761BFF895C00A372A6 /* HeroSpriteNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		459224621BFE764B00A372A6 /* SwiftTVGameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftTVGameUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		459224661BFE764B00A372A6 /* SwiftTVGameUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftTVGameUITests.swift; sourceTree = "<group>"; };
 		459224681BFE764B00A372A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		459224761BFF895C00A372A6 /* HeroSpriteNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeroSpriteNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				459224451BFE764B00A372A6 /* GameScene.sks */,
 				459224471BFE764B00A372A6 /* GameScene.swift */,
 				459224491BFE764B00A372A6 /* GameViewController.swift */,
+				459224761BFF895C00A372A6 /* HeroSpriteNode.swift */,
 				4592244B1BFE764B00A372A6 /* Game.xcassets */,
 				4592244D1BFE764B00A372A6 /* Main.storyboard */,
 				459224501BFE764B00A372A6 /* Assets.xcassets */,
@@ -265,6 +268,7 @@
 			files = (
 				459224481BFE764B00A372A6 /* GameScene.swift in Sources */,
 				4592244A1BFE764B00A372A6 /* GameViewController.swift in Sources */,
+				459224771BFF895C00A372A6 /* HeroSpriteNode.swift in Sources */,
 				459224441BFE764B00A372A6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
