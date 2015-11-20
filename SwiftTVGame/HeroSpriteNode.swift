@@ -20,6 +20,7 @@ class HeroSpriteNode: SKSpriteNode {
         self.texture = SKTexture(imageNamed: "hero")
         self.size = CGSizeMake(self.texture!.size().width, self.texture!.size().height);
         self.userInteractionEnabled = true
+        self.zPosition = 100
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {

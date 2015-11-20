@@ -8,13 +8,17 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+let heroBulletCategory:UInt32 = 1 << 0
+let enemyBulletCategory:UInt32 = 1 << 1
+
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var hero = HeroSpriteNode()
 
     override func didMoveToView(view: SKView) {
         loadHeroOntoScreen()
         self.physicsWorld.gravity = CGVectorMake(0.0, 0.0);
+        self.physicsWorld.contactDelegate = self
         setUpTapGesture()
         startShootingAtHero()
     }
@@ -22,7 +26,6 @@ class GameScene: SKScene {
     func loadHeroOntoScreen() {
         self.addChild(hero)
         hero.position = CGPointMake(hero.texture!.size().width / 2, self.frame.size.height / 2)
-        hero.zPosition = 100
     }
     
     func setUpTapGesture() {
@@ -34,6 +37,10 @@ class GameScene: SKScene {
     func fireBullet(gesture: UITapGestureRecognizer) {
         let heroBullet = SKSpriteNode(imageNamed: "heroBullet")
         heroBullet.physicsBody = SKPhysicsBody(rectangleOfSize:heroBullet.texture!.size())
+        heroBullet.physicsBody!.usesPreciseCollisionDetection = true
+        heroBullet.physicsBody!.categoryBitMask = heroBulletCategory
+        heroBullet.physicsBody!.contactTestBitMask = enemyBulletCategory
+        heroBullet.physicsBody!.collisionBitMask = enemyBulletCategory
         heroBullet.zPosition = 200
         heroBullet.position = CGPointMake(hero.position.x + hero.texture!.size().width / 2, hero.position.y)
         self.addChild(heroBullet)
@@ -43,13 +50,17 @@ class GameScene: SKScene {
     }
     
     func startShootingAtHero() {
-        let bullet = SKSpriteNode(imageNamed: "bullet")
-        bullet.zPosition = 200
-        bullet.physicsBody = SKPhysicsBody(rectangleOfSize:bullet.texture!.size())
-        bullet.position = CGPointMake(self.frame.size.width + 100, self.frame.size.height / 2)
-        self.addChild(bullet)
-        bullet.runAction(SKAction.moveTo(CGPointMake(-(bullet.texture!.size().width + 20), self.frame.size.height / 2), duration: 2.0)) { () -> Void in
-            bullet.removeFromParent()
+        let enemyBullet = SKSpriteNode(imageNamed: "enemyBullet")
+        enemyBullet.zPosition = 200
+        enemyBullet.physicsBody = SKPhysicsBody(rectangleOfSize:enemyBullet.texture!.size())
+        enemyBullet.physicsBody!.usesPreciseCollisionDetection = true
+        enemyBullet.physicsBody!.categoryBitMask = enemyBulletCategory
+        enemyBullet.physicsBody!.contactTestBitMask = heroBulletCategory
+        enemyBullet.physicsBody!.collisionBitMask = heroBulletCategory
+        enemyBullet.position = CGPointMake(self.frame.size.width + 100, self.frame.size.height / 2)
+        self.addChild(enemyBullet)
+        enemyBullet.runAction(SKAction.moveTo(CGPointMake(-(enemyBullet.texture!.size().width + 20), self.frame.size.height / 2), duration: 2.0)) { () -> Void in
+            enemyBullet.removeFromParent()
             self.startShootingAtHero()
         };
         
@@ -67,5 +78,15 @@ class GameScene: SKScene {
             hero.position.y = hero.position.y + distanceMovedY
         }
     }
-
+    
+    func didBeginContact(contact: SKPhysicsContact) {
+        let firstNode = contact.bodyA.node as! SKSpriteNode
+        let secondNode = contact.bodyB.node as! SKSpriteNode
+        
+//        if (contact.bodyA.categoryBitMask == heroBulletCategory && contact.bodyB.categoryBitMask == enemyBulletCategory) {
+//            print("Hit!!!")
+//        }
+        print("Hit!!")
+    }
+    
 }
